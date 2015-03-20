@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:tns="http://ws.forex.ml/jaws" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ForexWSRemoteService" targetNamespace="http://ws.forex.ml/jaws" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:soap11-enc="http://schemas.xmlsoap.org/soap/encoding/" xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://ws.forex.ml/jaws">
+      <xsd:complexType name="getRateSettingByDate">
+        <xsd:sequence>
+          <xsd:element name="branchid" nillable="true" type="xsd:string" />
+          <xsd:element name="currency" nillable="true" type="xsd:string" />
+          <xsd:element name="date" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="RateSettingResponse">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns:ServiceResponse">
+            <xsd:sequence>
+              <xsd:element name="buying" nillable="true" type="xsd:decimal" />
+              <xsd:element name="buyingclassid" nillable="true" type="xsd:string" />
+              <xsd:element name="currency" nillable="true" type="xsd:string" />
+              <xsd:element name="groupsettingdesc" nillable="true" type="xsd:string" />
+              <xsd:element name="groupsettingid" nillable="true" type="xsd:string" />
+              <xsd:element name="selling" nillable="true" type="xsd:decimal" />
+              <xsd:element name="sellingclassid" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="getRateSetting">
+        <xsd:sequence>
+          <xsd:element name="branchid" nillable="true" type="xsd:string" />
+          <xsd:element name="currency" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="getRateSettingByDateResponse">
+        <xsd:sequence>
+          <xsd:element name="result" nillable="true" type="tns:RateSettingResponse" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="getRateSettingResponse">
+        <xsd:sequence>
+          <xsd:element name="result" nillable="true" type="tns:RateSettingResponse" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ServiceResponse">
+        <xsd:sequence>
+          <xsd:element name="respcode" nillable="true" type="xsd:string" />
+          <xsd:element name="respdesc" nillable="true" type="xsd:string" />
+          <xsd:element name="respdetail" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="getRateSetting" type="tns:getRateSetting" />
+      <xsd:element name="getRateSettingByDate" type="tns:getRateSettingByDate" />
+      <xsd:element name="getRateSettingByDateResponse" type="tns:getRateSettingByDateResponse" />
+      <xsd:element name="getRateSettingResponse" type="tns:getRateSettingResponse" />
+    </xsd:schema>
+  </types>
+  <message name="ForexWSRemote_getRateSettingResponse">
+    <part name="result" element="tns:getRateSettingResponse" />
+  </message>
+  <message name="ForexWSRemote_getRateSettingByDateResponse">
+    <part name="result" element="tns:getRateSettingByDateResponse" />
+  </message>
+  <message name="ForexWSRemote_getRateSettingByDate">
+    <part name="parameters" element="tns:getRateSettingByDate" />
+  </message>
+  <message name="ForexWSRemote_getRateSetting">
+    <part name="parameters" element="tns:getRateSetting" />
+  </message>
+  <portType name="ForexWSRemote">
+    <operation name="getRateSetting">
+      <input message="tns:ForexWSRemote_getRateSetting" />
+      <output message="tns:ForexWSRemote_getRateSettingResponse" />
+    </operation>
+    <operation name="getRateSettingByDate">
+      <input message="tns:ForexWSRemote_getRateSettingByDate" />
+      <output message="tns:ForexWSRemote_getRateSettingByDateResponse" />
+    </operation>
+  </portType>
+  <binding name="ForexWSRemoteBinding" type="tns:ForexWSRemote">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="getRateSetting">
+      <soap:operation soapAction="getRateSetting" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="getRateSettingByDate">
+      <soap:operation soapAction="getRateSettingByDate" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="ForexWSRemoteService">
+    <port name="ForexWSRemotePort" binding="tns:ForexWSRemoteBinding">
+      <soap:address location="http://192.168.12.230:8080/forex-webservice/ForexWS" />
+    </port>
+  </service>
+</definitions>
